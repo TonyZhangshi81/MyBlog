@@ -205,7 +205,8 @@ app.UseSecurityHeaders(builder =>
 var supportedCultures = new[]
 {
     new CultureInfo("en"),
-    new CultureInfo("de")
+    new CultureInfo("de"),
+    new CultureInfo("zh-cn")
 };
 
 app.UseRequestLocalization(new RequestLocalizationOptions
