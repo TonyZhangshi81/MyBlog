@@ -1,0 +1,21 @@
+﻿
+<!-- ASP.NET Core 中的欧盟一般数据保护条例 (GDPR) 支持（即：视图提供了一个页面来详细说明站点的隐私策略）  https://learn.microsoft.com/zh-cn/aspnet/core/security/gdpr?view=aspnetcore-7.0  -->
+
+@using Microsoft.AspNetCore.Http.Features
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+@{
+    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner = !consentFeature?.CanTrack ?? false;
+    var cookieString = consentFeature?.CreateConsentCookie();
+}
+
+@if (showBanner)
+{
+    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show mt-5 mb-5" role="alert">
+        @Localizer["Use this space to summarize your privacy and cookie use policy."] <a asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Learn More"]</a>.
+        <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
+            <span aria-hidden="true">@Localizer["Accept"]</span>
+        </button>
+    </div>
+}
