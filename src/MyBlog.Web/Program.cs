@@ -129,6 +129,19 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration["ConnectionStrings:EFUnitOfWork"])
     .AddCheck<LogfileHealthCheck>("Log files");
 
+builder.Services.Configure<RequestLocalizationOptions>(opts =>
+{
+    var supportedCultures = new List<CultureInfo>
+    {
+        new CultureInfo("en"),
+        new CultureInfo("de"),
+        new CultureInfo("zh-cn")
+    };
+    opts.DefaultRequestCulture = new RequestCulture(supportedCultures.ElementAt(0));
+    opts.SupportedCultures = supportedCultures;
+    opts.SupportedUICultures = supportedCultures;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -202,11 +215,12 @@ app.UseSecurityHeaders(builder =>
     builder.ReferrerPolicy = ReferrerPolicies.NoReferrerWhenDowngrade;
 });
 
+/*
 var supportedCultures = new[]
 {
     new CultureInfo("en"),
     new CultureInfo("de"),
-    new CultureInfo("zh-cn")
+    new CultureInfo("zh-CN")
 };
 
 app.UseRequestLocalization(new RequestLocalizationOptions
@@ -215,6 +229,10 @@ app.UseRequestLocalization(new RequestLocalizationOptions
     SupportedCultures = supportedCultures,
     SupportedUICultures = supportedCultures
 });
+*/
+
+var requestLocalizationOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>().Value;
+app.UseRequestLocalization(requestLocalizationOptions);
 
 app.UseStatusCodePagesWithReExecute("/Error/{0}");
 app.UseRouting();

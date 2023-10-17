@@ -54,30 +54,44 @@
     </div>
     <footer class="border-top footer text-muted text-center d-print-none">
         <div class="container">
-            <a asp-area="" asp-controller="Privacy" asp-action="Index"><i class="fas fa-user-shield"></i></a>
-            <a asp-area="" asp-controller="Privacy" asp-action="Index">@Localizer["Privacy"]</a>
-            @if (!SignInManager.IsSignedIn(User))
-            {
-                if (BlogSettings.CurrentValue.NewUsersCanRegister)
-                {
-                    <text>|</text>
-                    <a asp-area="Identity" asp-page="/Account/Register"><i class="fas fa-user-plus"></i></a>
-                    <a asp-area="Identity" asp-page="/Account/Register">@Localizer["Register"]</a>
-                }
-                <text>|</text>
-                <a asp-area="Identity" asp-page="/Account/Login"><i class="fas fa-sign-in-alt"></i></a>
-                <a asp-area="Identity" asp-page="/Account/Login">@Localizer["Login"]</a>
-            }
-            else
-            {
-                <text>|</text>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index"><i class="fas fa-user-cog"></i></a>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index">@Localizer["Settings"]</a>
-                <text>|</text>
-                <form style="display: inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/">
-                    <button type="submit" class="btn btn-link" style="padding-left: 0;"><i class="fas fa-sign-out-alt"></i> @Localizer["Logout"]</button>
-                </form>
-            }
+            <div class="row">
+
+                <div class="col-md-1">
+                    <p>&copy; @System.DateTime.Now.Year - Localization</p>
+                </div>
+
+                <div class="col-md-9">
+                    <a asp-area="" asp-controller="Privacy" asp-action="Index"><i class="fas fa-user-shield"></i></a>
+                    <a asp-area="" asp-controller="Privacy" asp-action="Index">@Localizer["Privacy"]</a>
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        if (BlogSettings.CurrentValue.NewUsersCanRegister)
+                        {
+                            <text>|</text>
+                            <a asp-area="Identity" asp-page="/Account/Register"><i class="fas fa-user-plus"></i></a>
+                            <a asp-area="Identity" asp-page="/Account/Register">@Localizer["Register"]</a>
+                        }
+                        <text>|</text>
+                        <a asp-area="Identity" asp-page="/Account/Login"><i class="fas fa-sign-in-alt"></i></a>
+                        <a asp-area="Identity" asp-page="/Account/Login">@Localizer["Login"]</a>
+                    }
+                    else
+                    {
+                        <text>|</text>
+                        <a asp-area="Identity" asp-page="/Account/Manage/Index"><i class="fas fa-user-cog"></i></a>
+                        <a asp-area="Identity" asp-page="/Account/Manage/Index">@Localizer["Settings"]</a>
+                        <text>|</text>
+                        <form style="display: inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/">
+                            <button type="submit" class="btn btn-link" style="padding-left: 0;"><i class="fas fa-sign-out-alt"></i> @Localizer["Logout"]</button>
+                        </form>
+                    }
+                </div>
+
+                <div class="col-md-2 text-right">
+                    @await Html.PartialAsync("_SelectLanguagePartial")
+                </div>
+
+            </div>
         </div>
     </footer>
 

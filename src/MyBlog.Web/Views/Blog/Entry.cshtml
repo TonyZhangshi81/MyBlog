@@ -115,13 +115,15 @@
         <div class="mt-2">
             @if (!string.IsNullOrEmpty(comment.Email))
             {
-                string emailHash = comment.Email.ToLowerInvariant().EncryptMD5().ToLowerInvariant();
-                string avatarUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.PathBase}/avatar.png";
-                <img class="float-left mr-2 mb-2" alt="@comment.Name" src="https://www.gravatar.com/avatar/@emailHash?d=@System.Uri.EscapeDataString(avatarUrl)" width="64" height="64" />
+            // 由於國內無法訪問www.gravatar.com（全球通用頭像），顧使用gravatar生成頭像的功能暫時停用
+                //var emailHash = comment.Email.ToLowerInvariant().EncryptMD5().ToLowerInvariant();
+                //var avatarUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.PathBase}/avatar.png";
+                @*<img class="float-left mr-2 mb-2" alt="@comment.Name" src="https://www.gravatar.com/avatar/@emailHash?d=@System.Uri.EscapeDataString(avatarUrl)" width="64" height="64" />*@
+                <img class="float-left mr-2 mb-2" alt="@comment.Name" src="~/avatar.png" width="32" height="32" />
             }
             else
             {
-                <img class="float-left mr-2 mb-2" alt="@comment.Name" src="~/avatar.png" width="64" height="64" />
+                <img class="float-left mr-2 mb-2" alt="@comment.Name" src="~/avatar.png" width="32" height="32" />
             }
 
             <p class="float-left" style="white-space:pre-wrap">@comment.Comment</p>
